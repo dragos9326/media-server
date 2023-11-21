@@ -2,15 +2,15 @@
 
 content/*
 
-# provision/*
-provision/heimdall/*
-provision/ombi/*
-provision/jackett/*
-provision/qbittorrent/*
-provision/bazarr/*
-provision/prowlarr/*
-provision/lidarr/*
-provision/sonarr/*
-provision/radarr/*
-provision/plex/*
+provision/*
+#provision/heimdall/*
+#provision/ombi/*
+#provision/jackett/*
+#provision/qbittorrent/*
+#provision/bazarr/*
+#provision/prowlarr/*
+#provision/lidarr/*
+#provision/sonarr/*
+#provision/radarr/*
+#provision/plex/*
 
