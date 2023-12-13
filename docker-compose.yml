@@ -171,19 +171,56 @@ services:
     networks:
       - media-network
 
-  heimdall:
-    image: linuxserver/heimdall
-    container_name: heimdall
+  homarr:
+    image: ghcr.io/ajnart/homarr:latest
+    container_name: homarr
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Bucharest
     volumes:
-      - ./provision/heimdall:/config
+      - ./provision/homarr/configs:/app/data/configs
+      - ./provision/homarr/icons:/app/public/icons
+      - ./provision/homarr/data:/data
     ports:
-      - "80:80"
-      - "443:443"
-      # - "8083:80"
+      - "80:7575"
+    restart: unless-stopped
+    networks:
+      - media-network
+
+  readarr:
+    image: ghcr.io/linuxserver/readarr:nightly
+    container_name: readarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Bucharest
+    volumes:
+      - ./provision/readarr/configs:/config 
+      - ./content/media/books:/books
+      - ./content/torrents/books:/downloads 
+    ports:
+      - 8787:8787
+    restart: unless-stopped
+    networks:
+      - media-network
+
+  calibre:
+    image: ghcr.io/linuxserver/calibre
+    container_name: calibre
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Bucharest
+    volumes:
+      - ./provision/readarr/calibre:/config 
+      - ./content/torrents/books:/import #change before the ':'
+      # - path/to/your/calibre/upload:/uploads #change before the ':'
+      # - path/to/your/calibre/plugins:/plugins #change before the ':'
+      - ./content/media/books:/Calibre_Library #this is where your ebooks will end up
+    ports:
+      # - 8080:8080 #change before the ':' if necessary
+      - 8081:8080 #change before the ':' if necessary
     restart: unless-stopped
     networks:
       - media-network
