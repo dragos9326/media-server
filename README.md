@@ -45,6 +45,7 @@ These are just a few examples, and the specific solution that is best for you wi
 3. The media file and its subtitles are now available in the Plex library and can be streamed by the user.<br>
    The user can now watch the movie, music, or series and enjoy it with subtitles.
 4. The user can access the media file through the Plex app on their device of choice and begin enjoying the content.
+5. The user can add books in the Calibre repository and read them in Kavita.
   
 The user can repeat this process to add new movies, music, or series to their watchlist (Could request from Plex, Ombi, sync IMDB list etc..) and enjoy them on their media server.
 
@@ -118,6 +119,13 @@ Here's a brief explanation of each services and the and the relationships betwee
   Heimdall is an optional service, you may remove it from the stack, but I prefer having a kind of entry point/dashboard/home page for all idea to throwthe apps, anyway the process as described for requesting and download content once setup and runing is fully automated, but its always a good idea to Throw an eye and nobady likes to rember all the IPs and ports, unless you have a DNS server runing (but that is part for another topic)
   - Improve the maintainability of all the services, no need to remember which app served on what port etc..
   - Nice to have single point to access them all
+- **Homarr**<br>
+  Dashboard/home page for all the applications.<br>
+- **Calibre**<br>
+  Book management.<br>
+- **Kavita**<br>
+  Book manager/reader.<br>
+  Synced with calibre to read books.<br>
 
 The services Radarr, Sonarr, and Lidarr, work together to automate the process of downloading new movies, TV shows, and music releases and managing your movie, TV show and music library.<br>
 These services use the power of Jackett/Prowlarr to allow you to use many torrent trackers that are not available in the default installation, and they are all connected with qbittorrent to automatically download the files, when the requested medias are available.
@@ -356,14 +364,17 @@ Here is a summary of the steps went through to create the media server:
     │   │   ├───movies
     │   │   ├───movies favorite
     │   │   ├───music
+    |   |   |───books
     │   │   └───tv
     │   │
     │   ├───torrents
     │   │   ├───movies
+    |   |   |───books
     │   │   └───tv
     │   └───usenet
     │       ├───movies
     │       ├───music
+    |   |   |───books
     │       └───tv
     │
     └───provision
@@ -413,6 +424,8 @@ Optional service.
   | Jackett     | ``http://<your_host_ip>:9117`` |
   | Bazarr      | ``http://<your_host_ip>:6767`` |
   | Ombi        | ``http://<your_host_ip>:3579`` |
+  | Kavita      | ``http://<your_host_ip>:5000`` |
+  | Calibre     | ``http://<your_host_ip>:1000`` |
 
 - Last, you may want to change home page background from settings menu
 
@@ -647,6 +660,25 @@ Access the Ombi web interface by navigating to the URL ``http://<your-server-ip>
 
 Additional resources:
 - [Ombi - Bytesized Hosting Wiki](https://bytesized-hosting.com/pages/ombi)
+
+### Kavita
+
+Access the Ombi web interface by navigating to the URL ``http://<your-server-ip>:5000`` in a web browser.
+
+1. Follow the initial setup.
+2. Setup your libraries from ``Server Setting(right cogs)``>``Libraries``<br>
+
+### Calibre
+
+Access the Ombi web interface by navigating to the URL ``http://<your-server-ip>:1000`` in a web browser.
+
+1. Follow the initial setup.
+2. In the initial screen check to make sure the location for your books is the same as the one configured in docker /Calibre_Web<br>
+3. Go to ``Preferences``>``Behaviour`` to setup you preffered output format(EPUB) then hit Apply<br>
+2. Go to ``Preferences``>``Adding Books``>``Adding actions``. Check Options: <br>
+When using the "Copy to library" action check for duplciates with the same title, author and language<br>
+Automatically convert added books to the preferred output format <br>
+Auto-merge added books if they alread exist: Ignore duplicate incoming formats <br>
 
 ## Author notes
 
